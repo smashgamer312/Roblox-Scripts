@@ -1,6 +1,6 @@
 -- Xeno Remote Control Script (Telegram Bot API)
-local BOT_TOKEN = "ВАШ_ТОКЕН_БОТА"
-local CHAT_ID = "ВАШ_CHAT_ID"
+local BOT_TOKEN = "7977017981:AAEm8p5axwhAzqgcnLGaY3fbmB1NtWWSl8Q"
+local CHAT_ID = "6657232556"
 local API_URL = "https://api.telegram.org/bot"..BOT_TOKEN
 local last_update_id = 0
 local player_name = engine.GetPlayerInfo(engine.GetLocalPlayerIndex()).name
